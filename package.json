@@ -1,0 +1,40 @@
+{
+  "name": "ske19-api",
+  "version": "1.0.0",
+  "description": "RESTful API for SKE19 students.",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "api",
+    "backend",
+    "restful"
+  ],
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Pawitchaya Chaloeijanya",
+      "email": "pawitchaya.ch@ku.th",
+      "url": "https://github.com/GToidZ"
+    },
+    {
+      "name": "Pakorn Laohakanniyom",
+      "email": "pakorn.la@ku.th",
+      "url": "https://github.com/RyukungG"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SKE19/SKE19-API.git"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}

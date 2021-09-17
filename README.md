@@ -15,7 +15,8 @@ npm install
 Then, you should make a new `.env` file, here's the emptied environment file:
 
 ```
-PORT=
+PORT=3000
+DATA_PATH=path/to/your/data/file
 ```
 
 After that, you should be able to start the API by:

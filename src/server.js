@@ -5,6 +5,7 @@ const fs = require('fs')
 const csv = require('csv-parser')
 const http = require('http')
 const { json } = require('express')
+
 const app = express()
 
 let skeData = { students : {} }
@@ -35,28 +36,32 @@ function readCsv(filepath){
 app.use(cors())
 app.use(json())
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
+    res.json({ "github": "https://github.com/SKE19" })
+})
+
+app.get('/students', (req, res) => {
     res.json(skeData)
 })
 
-readCsv(process.env.DATA_PATH).then(() => {
-    
-    const server = http.createServer(app)
-
-    server.listen(process.env.PORT, () => {
-        console.log(skeData)
-        console.log(`Server started at port ${process.env.PORT}`)
-    })
-
+app.get('/student', (req, res) => {
+    res.status(500)
+    res.json({ "error": "No ID is provided." })
 })
 
-/* exports = Object.freeze({
-    server: http.createServer(app)
-    init: () => {
-        return readCsv(process.env.DATA_PATH).then(() => {
-            this.
-            })
-        })
+app.get('/student/:id', (req, res) => {
+    if(skeData.students[req.params.id]){
+        res.json(skeData.students[req.params.id])
+    } else {
+        res.status(404)
+        res.json({ "error": "No student of that ID is found." })
     }
 })
-*/
+
+readCsv(process.env.DATA_PATH).then(() => {
+    const server = http.createServer(app)
+    server.listen(process.env.PORT, () => {
+        console.log(`Server started at port ${process.env.PORT}`)
+    })
+    exports.students = skeData
+})

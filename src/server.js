@@ -77,24 +77,18 @@ app.get('/students', (req, res) => {
     res.json(skeData)
 })
 
-app.get('/student', (req, res) => {
-    res.status(500)
-    res.json({ "error": "No ID is provided." })
-})
-
-app.get('/student/:id', (req, res) => {
-    if(skeData.students[req.params.id]){
-        res.json(skeData.students[req.params.id])
-    } else {
-        res.status(404)
-        res.json({ "error": "No student of that ID is found." })
-    }
-})
-
 readCsv(process.env.DATA_PATH).then(() => {
-    console.log(skeData)
+    // Server startup
     const server = http.createServer(app)
     server.listen(process.env.PORT, () => {
         console.log(`Server started at port ${process.env.PORT}`)
     })
+}).then(() => {
+    // Exporting skeData for use with other JS.
+    exports.skeData = skeData
+}).then(() => {
+    // JS that required skeData should be put here, such as routers.
+    // Explicit but it works!
+    const studentRouter = require('./routes/student')
+    app.use('/student', studentRouter)
 })

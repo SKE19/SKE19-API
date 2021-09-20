@@ -1,5 +1,5 @@
 # SKE19 RESTful API
-**Host status: No host yet (in-development)**
+**Host status: Online @ https://ske19-api.herokuapp.com/**
 
 A web-based RESTful API for querying information of SKE19 students.
 

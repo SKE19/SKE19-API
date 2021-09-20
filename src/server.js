@@ -12,6 +12,7 @@ const app = express()
 let skeData = { students : {} }
 
 function validURL(str) {
+    // Check if str is a valid URL.
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
       '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
@@ -22,8 +23,10 @@ function validURL(str) {
 }
 
 function readCsv(filepath){
+    // Read CSV from either URL or Local file path.
     return new Promise((resolve, reject)=>{
         if (validURL(filepath)) {
+            // GET over HTTPS protocol.
             https.get(filepath, res => {
                 res.pipe(csv())
                 .on('data', (row) => {
@@ -44,6 +47,7 @@ function readCsv(filepath){
                 .on('error', reject)
             })
         } else {
+            // GET from local file.
             fs.createReadStream(filepath)
             .pipe(csv())
             .on('data', (row) => {
@@ -78,7 +82,7 @@ app.get('/students', (req, res) => {
 })
 
 readCsv(process.env.DATA_PATH).then(() => {
-    // Server startup
+    // Server startup.
     const server = http.createServer(app)
     server.listen(process.env.PORT, () => {
         console.log(`Server started at port ${process.env.PORT}`)

@@ -7,6 +7,9 @@ const http = require('http')
 const https = require('https')
 const { json } = require('express')
 
+const auth = require('./routes/auth')
+const { validateToken } = require('./routes/auth')
+
 const app = express()
 
 let skeData = { students : {} }
@@ -77,7 +80,9 @@ app.get('/', (req, res) => {
     res.json({ "github": "https://github.com/SKE19" })
 })
 
-app.get('/students', (req, res) => {
+app.use('/auth', auth)
+
+app.get('/students', validateToken, (req, res) => {
     res.json(skeData)
 })
 
@@ -94,5 +99,5 @@ readCsv(process.env.DATA_PATH).then(() => {
     // JS that required skeData should be put here, such as routers.
     // Explicit but it works!
     const studentRouter = require('./routes/student')
-    app.use('/student', studentRouter)
+    app.use('/student', validateToken, studentRouter)
 })

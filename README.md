@@ -1,11 +1,16 @@
 # SKE19 RESTful API [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/90vd.svg)](https://betteruptime.com/?utm_source=status_badge)
+
+### Version: 1.0.1
+
 **URL: https://ske19-api.herokuapp.com/**
 
-A web-based RESTful API for querying information of SKE19 students.
+A web-based RESTful API for querying information of SKE19 students, with AWS DynamoDB for database.
 
 Currently there are only GET routes for this API, more features will be implemented later. The responses of the API are always `application/json`. See below for routes for this API.
 
 ## Contribution (or just Building for yourself)
+Make sure that you have set up **AWS** with **IAM** user and **DynamoDB**.
+
 After cloning the repository, you should navigate to your repo folder, and type in terminal:
 
 ```
@@ -16,7 +21,12 @@ Then, you should make a new `.env` file, here's the emptied environment file:
 
 ```
 PORT=3000
-DATA_PATH=path/to/your/data/file
+SECRET_IDENTIFIER=anything
+
+DATA_PATH=path/to/your/data/file    # Could be either HTTPS or local file.
+
+AWS_ACCESS_KEY_ID=aws_key
+AWS_SECRET_ACCESS_KEY=aws_secret
 ```
 
 After that, you should be able to start the API by:

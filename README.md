@@ -1,5 +1,7 @@
 # SKE19 RESTful API [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/90vd.svg)](https://betteruptime.com/?utm_source=status_badge)
+
 ### Version: 1.0.1
+
 **URL: https://ske19-api.herokuapp.com/**
 
 A web-based RESTful API for querying information of SKE19 students, with AWS DynamoDB for database.

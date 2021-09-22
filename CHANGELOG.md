@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AWS SDK is now used for DynamoDB.
 
 ### Changed
-- Environment has added three new variables including, `SECRET_IDENTIFER`, `AWS_ACCESS_KEY` and `AWS_SECRET_ACCESS_KEY`. 
+- Environment has added three new variables including, `SECRET_IDENTIFER`, `AWS_ACCESS_KEY` and `AWS_SECRET_ACCESS_KEY`.
+- [Production API](https://ske19-api.herokuapp.com/) access now requires authorization. 
 
 ## [1.0.0] - 2021-09-20
 ### Added

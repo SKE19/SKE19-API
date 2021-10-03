@@ -6,8 +6,6 @@
 
 A web-based RESTful API for querying information of SKE19 students, with AWS DynamoDB for database.
 
-Currently there are only GET routes for this API, more features will be implemented later. The responses of the API are always `application/json`. See below for routes for this API.
-
 ## Contribution (or just Building for yourself)
 Make sure that you have set up **AWS** with **IAM** user and **DynamoDB**.
 

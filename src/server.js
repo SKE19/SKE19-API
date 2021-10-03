@@ -26,9 +26,9 @@ function validURL(str) {
 }
 
 function readCsv(filepath){
-    // Read CSV from either URL or Local file path.
+    // Read CSV from either HTTPS or Local file path.
     return new Promise((resolve, reject)=>{
-        if (validURL(filepath)) {
+        if (validURL(filepath) && process.env.DATA_TYPE.match(new RegExp("HTTPS", "gi"))) {
             // GET over HTTPS protocol.
             https.get(filepath, res => {
                 res.pipe(csv())
@@ -41,7 +41,7 @@ function readCsv(filepath){
                         lastNameTH: row['nameTH'].split(" ")[1],
                         nickTH: row['nickTH'],
                         email: row['email'],
-                        instagram: '@' + row['instagram']
+                        instagram: (row['instagram'] !== "") ? '@' + row['instagram'] : ""
                     }
                 })
                 .on('end', () => {
@@ -49,27 +49,27 @@ function readCsv(filepath){
                 })
                 .on('error', reject)
             })
-        } else {
-            // GET from local file.
-            fs.createReadStream(filepath)
-            .pipe(csv())
-            .on('data', (row) => {
-                skeData['students'][row['studentId']] = {
-                    firstNameEN: row['nameEN'].split(" ")[0],
-                    lastNameEN: row['nameEN'].split(" ")[1],
-                    nickEN: row['nickEN'],
-                    firstNameTH: row['nameTH'].split(" ")[0],
-                    lastNameTH: row['nameTH'].split(" ")[1],
-                    nickTH: row['nickTH'],
-                    email: row['email'],
-                    instagram: '@' + row['instagram']
-                }
-            })
-            .on('end', () => {
-                resolve()
-            })
-            .on('error', reject)
+            return
         }
+        // GET from local file.
+        fs.createReadStream(filepath)
+        .pipe(csv())
+        .on('data', (row) => {
+            skeData['students'][row['studentId']] = {
+                firstNameEN: row['nameEN'].split(" ")[0],
+                lastNameEN: row['nameEN'].split(" ")[1],
+                nickEN: row['nickEN'],
+                firstNameTH: row['nameTH'].split(" ")[0],
+                lastNameTH: row['nameTH'].split(" ")[1],
+                nickTH: row['nickTH'],
+                email: row['email'],
+                instagram: (row['instagram'] !== "") ? '@' + row['instagram'] : ""
+            }
+        })
+        .on('end', () => {
+            resolve()
+        })
+        .on('error', reject)
     })
 }
 
@@ -91,6 +91,10 @@ readCsv(process.env.DATA_PATH).then(() => {
     const server = http.createServer(app)
     server.listen(process.env.PORT, () => {
         console.log(`Server started at port ${process.env.PORT}`)
+        if(process.env.ENABLE_AWS === "true"){
+            dynamo = require("./util/aws").dynamo
+            console.log(`AWS is enabled in .env: DynamoDB client created.`)
+        }
     })
 }).then(() => {
     // Exporting skeData for use with other JS.
@@ -99,5 +103,9 @@ readCsv(process.env.DATA_PATH).then(() => {
     // JS that required skeData should be put here, such as routers.
     // Explicit but it works!
     const studentRouter = require('./routes/student')
+    const discordRouter = require('./routes/discord')
     app.use('/student', validateToken, studentRouter)
+    if(process.env.ENABLE_AWS === "true"){
+        app.use('/discord', validateToken, discordRouter)
+    }
 })

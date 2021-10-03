@@ -1,6 +1,6 @@
 # SKE19 RESTful API [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/90vd.svg)](https://betteruptime.com/?utm_source=status_badge)
 
-### Version: 1.0.1
+### Version: 1.1.0
 
 **URL: https://ske19-api.herokuapp.com/**
 
@@ -21,12 +21,17 @@ Then, you should make a new `.env` file, here's the emptied environment file:
 
 ```
 PORT=3000
-SECRET_IDENTIFIER=anything
+SECRET_IDENTIFIER=key_for_jwt
 
-DATA_PATH=path/to/your/data/file    # Could be either HTTPS or local file.
+DATA_TYPE=[FILE|HTTPS]
+DATA_PATH=path/to/your/csv
 
+ENABLE_AWS=[true|false]
 AWS_ACCESS_KEY_ID=aws_key
 AWS_SECRET_ACCESS_KEY=aws_secret
+AWS_REGION=aws_region
+
+MAX_DISCORD_COUNT=2
 ```
 
 After that, you should be able to start the API by:

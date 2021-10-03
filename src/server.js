@@ -13,7 +13,6 @@ const { validateToken } = require('./routes/auth')
 const app = express()
 
 let skeData = { students : {} }
-let dynamo
 
 function validURL(str) {
     // Check if str is a valid URL.
@@ -42,7 +41,7 @@ function readCsv(filepath){
                         lastNameTH: row['nameTH'].split(" ")[1],
                         nickTH: row['nickTH'],
                         email: row['email'],
-                        instagram: '@' + row['instagram']
+                        instagram: (row['instagram'] !== "") ? '@' + row['instagram'] : ""
                     }
                 })
                 .on('end', () => {
@@ -64,7 +63,7 @@ function readCsv(filepath){
                 lastNameTH: row['nameTH'].split(" ")[1],
                 nickTH: row['nickTH'],
                 email: row['email'],
-                instagram: '@' + row['instagram']
+                instagram: (row['instagram'] !== "") ? '@' + row['instagram'] : ""
             }
         })
         .on('end', () => {

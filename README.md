@@ -1,4 +1,4 @@
-# SKE19 RESTful API [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/90vd.svg)](https://betteruptime.com/?utm_source=status_badge)
+# SKE19 RESTful API [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/90vd.svg)](https://betteruptime.com/?utm_source=status_badge) ![Made with love in Thailand](https://madewithlove.now.sh/th?heart=true&colorA=%232e1c5e&colorB=%23e735f3)
 
 ### Version: 1.1.0
 
